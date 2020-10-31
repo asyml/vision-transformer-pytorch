@@ -189,7 +189,7 @@ class VisionTransformer(nn.Module):
         feat = self.transformer(emb)
 
         # classifier
-        logits = self.classifier(feat)
+        logits = self.classifier(feat[:, 0])
         return logits
 
 

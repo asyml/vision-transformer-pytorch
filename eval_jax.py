@@ -26,7 +26,7 @@ def main():
     data_loader = ImageNetDownSampleDataLoader(image_size=384, batch_size=4, num_workers=0, split='val')
 
     for batch_idx, (data, target) in enumerate(data_loader):
-        target_numpy = target.cpu().numpy().reshape(1, 4)
+        target_numpy = target.cpu().numpy().reshape(1, 4, 1)
         data_numpy = data.cpu().numpy().transpose(0, 3, 1, 2).reshape(1, 4, 384, 384, 3)
         jax_predicted = vit_apply_repl(params_repl, data_numpy)
         pred = jax_predicted.argmax(axis=-1)
