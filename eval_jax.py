@@ -50,7 +50,6 @@ def main():
     torch_model.load_state_dict(state_dict)
     torch_model.eval()
 
-
     data_loader = ImageNetDownSampleDataLoader(image_size=image_size, batch_size=1, num_workers=0, split='val')
 
     for batch_idx, (data, target) in enumerate(data_loader):
