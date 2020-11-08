@@ -161,7 +161,7 @@ class VisionTransformer(nn.Module):
         num_patches = gh * gw
         self.embedding = nn.Conv2d(3, emb_dim, kernel_size=(fh, fw), stride=(fh, fw))
         # class token
-        self.cls_token = nn.Parameter(torch.randn(1, 1, emb_dim))
+        self.cls_token = nn.Parameter(torch.zeros(1, 1, emb_dim))
 
         # transformer
         self.transformer = Encoder(
@@ -178,6 +178,7 @@ class VisionTransformer(nn.Module):
 
     def forward(self, x):
         emb = self.embedding(x)     # (n, c, gh, gw)
+        return emb
         b, c, h, w = emb.shape
         emb = emb.reshape(b, h * w, c)
 

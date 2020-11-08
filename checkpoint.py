@@ -64,7 +64,7 @@ def convert(keys, values):
         torch_key = '.'.join(w for w in torch_names)
 
         # convert values to tensor and check shapes
-        tensor_value = torch.FloatTensor(value)
+        tensor_value = torch.tensor(value, dtype=torch.float)
         # check shape
         num_dim = len(tensor_value.shape)
 
