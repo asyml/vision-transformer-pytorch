@@ -76,17 +76,13 @@ def convert(keys, values):
         elif num_dim == 3 and torch_names[-1] == 'weight' and torch_names[-2] in ['query', 'key', 'value']:
             feat_dim, num_heads, head_dim = tensor_value.shape
             # for multi head attention q/k/v weight
-            tensor_value = tensor_value.reshape(feat_dim, -1)
-            tensor_value = tensor_value.T
+            tensor_value = tensor_value
         elif num_dim == 2 and torch_names[-1] == 'bias' and torch_names[-2] in ['query', 'key', 'value']:
             # for multi head attention q/k/v bias
-            tensor_value = tensor_value.reshape(-1)
+            tensor_value = tensor_value
         elif num_dim == 3 and torch_names[-1] == 'weight' and torch_names[-2] == 'out':
             # for multi head attention out weight
-            num_heads, head_dim, feat_dim = tensor_value.shape
-            # for multi head attention q/k/v weight
-            tensor_value = tensor_value.reshape(-1, feat_dim)
-            tensor_value = tensor_value.T
+            tensor_value = tensor_value
         elif num_dim == 4 and torch_names[-1] == 'weight':
             tensor_value = tensor_value.permute(3, 2, 0, 1)
 
@@ -111,7 +107,7 @@ if __name__ == '__main__':
                  num_classes=1000,
                  attn_dropout_rate=0.0,
                  dropout_rate=0.1)
-
+    temp = model.state_dict()
     model.load_state_dict(state_dict)
 
 

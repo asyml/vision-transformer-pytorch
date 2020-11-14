@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from einops import repeat
+import numpy as np
 
 
 class PositionEmbs(nn.Module):
@@ -50,38 +50,53 @@ class MlpBlock(nn.Module):
         return out
 
 
+class LinearGeneral(nn.Module):
+    def __init__(self, in_dim=(768,), feat_dim=(12, 64)):
+        super(LinearGeneral, self).__init__()
+
+        self.weight = nn.Parameter(torch.randn(*in_dim, *feat_dim))
+        self.bias = nn.Parameter(torch.zeros(*feat_dim))
+
+    def forward(self, x, dims):
+        a = torch.tensordot(x, self.weight, dims=dims) + self.bias
+        return a
+
+
 class SelfAttention(nn.Module):
     def __init__(self, in_dim, heads=8, dropout_rate=0.1):
         super(SelfAttention, self).__init__()
         self.heads = heads
         self.head_dim = in_dim // heads
-        self.scale = self.head_dim ** -0.5
+        self.scale = self.head_dim ** 0.5
 
-        self.query = nn.Linear(in_dim, in_dim)
-        self.key = nn.Linear(in_dim, in_dim)
-        self.value = nn.Linear(in_dim, in_dim)
-        self.out = nn.Linear(in_dim, in_dim)
+        self.query = LinearGeneral((in_dim,), (self.heads, self.head_dim))
+        self.key = LinearGeneral((in_dim,), (self.heads, self.head_dim))
+        self.value = LinearGeneral((in_dim,), (self.heads, self.head_dim))
+        self.out = LinearGeneral((self.heads, self.head_dim), (in_dim,))
+
         if dropout_rate > 0:
             self.dropout = nn.Dropout(dropout_rate)
         else:
             self.dropout = None
 
-    def forward(self, x, mask=None):
+    def forward(self, x):
         b, n, _ = x.shape
 
-        q = self.query(x).view(b, -1, self.heads, self.head_dim)
-        k = self.key(x).view(b, -1, self.heads, self.head_dim)
-        v = self.value(x).view(b, -1, self.heads, self.head_dim)
+        q = self.query(x, dims=([2], [0]))
+        k = self.key(x, dims=([2], [0]))
+        v = self.value(x, dims=([2], [0]))
 
-        scores = torch.matmul(q, k.transpose(-2, -1)) / self.scale
-        if mask is not None:
-            scores = scores.masked_fill(mask == 0, -1e9)
+        q = q.permute(0, 2, 1, 3)
+        k = k.permute(0, 2, 1, 3)
+        v = v.permute(0, 2, 1, 3)
 
-        attn_scores = F.softmax(scores, dim=-1)
+        attn_weights = torch.matmul(q, k.transpose(-2, -1)) / self.scale
+        attn_weights = F.softmax(attn_weights, dim=-1)
+        out = torch.matmul(attn_weights, v)
+        out = out.permute(0, 2, 1, 3)
 
-        out = torch.matmul(attn_scores, v)
-        out = out.transpose(1, 2).contiguous().view(b, -1, self.heads * self.head_dim)
-        out = self.out(out)
+        out = self.out(out, dims=([2, 3], [0, 1]))
+
         return out
 
 
@@ -178,12 +193,12 @@ class VisionTransformer(nn.Module):
 
     def forward(self, x):
         emb = self.embedding(x)     # (n, c, gh, gw)
-        return emb
-        b, c, h, w = emb.shape
+        emb = emb.permute(0, 2, 3, 1)  # (n, gh, hw, c)
+        b, h, w, c = emb.shape
         emb = emb.reshape(b, h * w, c)
 
         # prepend class token
-        cls_token = repeat(self.cls_token, '() n d -> b n d', b=b)
+        cls_token = self.cls_token.repeat(b, 1, 1)
         emb = torch.cat([cls_token, emb], dim=1)
 
         # transformer

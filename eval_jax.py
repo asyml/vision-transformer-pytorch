@@ -56,22 +56,23 @@ def main():
 
         # jax prediction
         target_numpy = target.cpu().numpy()
-        data_numpy = data.cpu().numpy().transpose(0, 3, 1, 2).reshape(1, -1, image_size, image_size, 3)
-        jax_predicted = vit_apply_repl(params_repl, data_numpy)._value[0]
-        # pred = jax_predicted.argmax(axis=-1)
-        # is_same = pred == target_numpy
-        # print(is_same)
+        data_numpy = data.cpu().numpy().transpose(0, 2, 3, 1).reshape(1, -1, image_size, image_size, 3)
+        jax_predicted_logits = vit_apply_repl(params_repl, data_numpy)._value[0]
+        jax_predicted = onp.argmax(jax_predicted_logits, axis=-1)
 
         # torch prediction
         with torch.no_grad():
             torch_predicted = torch_model(data)
-        torch_predicted = torch_predicted.cpu().numpy()
+        torch_predicted_logits = torch_predicted.cpu().numpy()
+        torch_predicted = onp.argmax(torch_predicted_logits, axis=-1)
 
         # check difference
-        jax_predicted = jax_predicted.transpose(0, 3, 1, 2)
-        assert onp.allclose(jax_predicted, torch_predicted, rtol=1e-5, atol=1e-8)
+        diff = onp.abs(jax_predicted_logits - torch_predicted_logits)
+        assert onp.allclose(jax_predicted_logits, torch_predicted_logits, rtol=1e-1, atol=1e-1), "diff {}, max {}, sum {}".format(diff, onp.max(diff), onp.sum(diff))
 
-        print(torch_predicted)
+        diff = onp.abs(jax_predicted - torch_predicted)
+        assert onp.allclose(jax_predicted, torch_predicted, rtol=1e-5, atol=1e-8), "diff {}, max {}, sum {}".format(diff, onp.max(diff), onp.sum(diff))
+
 
 if __name__ == '__main__':
     main()

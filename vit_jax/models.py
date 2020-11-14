@@ -225,7 +225,6 @@ class VisionTransformer(nn.Module):
       x = jnp.transpose(x, [0, 1, 3, 2, 4, 5])
       x = jnp.reshape(x, [n, gh, gw, -1])
     # Here, x is a grid of embeddings.
-    a = x
 
     # (Possibly partial) Transformer.
     if transformer is not None:
@@ -252,7 +251,7 @@ class VisionTransformer(nn.Module):
       x = IdentityLayer(x, name='pre_logits')
 
     x = nn.Dense(x, num_classes, name='head', kernel_init=nn.initializers.zeros)
-    return a
+    return x
 
 
 CONFIGS = {
