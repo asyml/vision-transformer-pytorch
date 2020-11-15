@@ -1,3 +1,7 @@
+# weights
+weights/jax/*
+weights/pytorch/*
+
 # idea
 .idea/*
 
