@@ -4,6 +4,7 @@ weights/pytorch/*
 
 # idea
 .idea/*
+.DS_Store
 
 # data
 data/*
