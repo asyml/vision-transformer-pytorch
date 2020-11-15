@@ -22,7 +22,7 @@ conda create --name vit --file requirements.txt
 Download pretrained jax models from the [original jax implementation repo](https://github.com/google-research/vision_transformer). 
 Put the files under 'weights/jax'.
 
-Download pretrained pytorch models from ++. Put the files under 'weights/pytorch'.
+Download pretrained pytorch models from http://www.image-net.org/index. Put the files under 'weights/pytorch'.
 
 Download ImageNet dataset from and process it according to. Put it in 'data/ImageNet'
 
@@ -48,9 +48,11 @@ TODO
 
 
 # TODO List
-- [] Fine-Tune code 
-- [] Fine-Tune results on CIFAR10/CIFAR100
-- [] Multi-GPU
+- [ ] Fine-Tune code 
+- [ ] Fine-Tune results on CIFAR10/CIFAR100
+- [ ] Multi-GPU
+- [ ] Integrated into Texar
+
 
 # Acknowledge
 1. https://github.com/google-research/vision_transformer
