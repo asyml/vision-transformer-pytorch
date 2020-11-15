@@ -27,8 +27,8 @@ def train_epoch(epoch, model, data_loader, criterion, optimizer, lr_scheduler, m
 
         metrics.writer.set_step((epoch - 1) * len(data_loader) + batch_idx)
         metrics.update('loss', loss.item())
-        metrics.update('acc1', loss.item())
-        metrics.update('acc5', loss.item())
+        metrics.update('acc1', acc1.item())
+        metrics.update('acc5', acc5.item())
 
         if batch_idx % 100 == 0:
             print("Train Epoch: {:03d} Batch: {:05d}/{:05d} Loss: {:.4f} Acc@1: {:.2f}, Acc@5: {:.2f}"
