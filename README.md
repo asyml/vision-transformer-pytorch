@@ -39,12 +39,12 @@ TODO
 
 # Results and Models
 
-| upstream    | model    | dataset      |   jax acc  |   acc   | link                                                                                                                                                   |
+| upstream    | model    | dataset      |   jax acc  |   acc   | model link                                                                                                                                                   |
 |:------------|:---------|:-------------|-----------:|--------:|:-------------------------------------------------------------------------------------------------------------------------------------------------------|
-| imagenet21k | ViT-B_16 | imagenet2012 |     0.8462 | 0.8390  | [tensorboard.dev](https://tensorboard.dev/experiment/CVAxQLz1Rwycg9WgqNG80Q/#scalars&_smoothingWeight=0&regexInput=imagenet21k/ViT-B_16/imagenet2012/) |
-| imagenet21k | ViT-B_32 | imagenet2012 |     0.8179 | 0.8114  | [tensorboard.dev](https://tensorboard.dev/experiment/CVAxQLz1Rwycg9WgqNG80Q/#scalars&_smoothingWeight=0&regexInput=imagenet21k/ViT-B_32/imagenet2012/) |
-| imagenet21k | ViT-L_16 | imagenet2012 |     0.8507 |         | [tensorboard.dev](https://tensorboard.dev/experiment/CVAxQLz1Rwycg9WgqNG80Q/#scalars&_smoothingWeight=0&regexInput=imagenet21k/ViT-L_16/imagenet2012/) |
-| imagenet21k | ViT-L_32 | imagenet2012 |     0.8201 |         | [tensorboard.dev](https://tensorboard.dev/experiment/CVAxQLz1Rwycg9WgqNG80Q/#scalars&_smoothingWeight=0&regexInput=imagenet21k/ViT-L_32/imagenet2012/) |
+| imagenet21k | ViT-B_16 | imagenet2012 |     0.8462 | 0.8390  | [checkpoint] |
+| imagenet21k | ViT-B_32 | imagenet2012 |     0.8179 | 0.8114  | [checkpoint] |
+| imagenet21k | ViT-L_16 | imagenet2012 |     0.8507 |         | [checkpoint] |
+| imagenet21k | ViT-L_32 | imagenet2012 |     0.8201 |         | [checkpoint] |
 
 
 # TODO List
