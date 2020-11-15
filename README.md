@@ -41,10 +41,10 @@ TODO
 
 | upstream    | model    | dataset      |   jax acc  |   acc   | model link                                                                                                                                                   |
 |:------------|:---------|:-------------|-----------:|--------:|:-------------------------------------------------------------------------------------------------------------------------------------------------------|
-| imagenet21k | ViT-B_16 | imagenet2012 |     0.8462 | 0.8390  | [checkpoint] |
-| imagenet21k | ViT-B_32 | imagenet2012 |     0.8179 | 0.8114  | [checkpoint] |
-| imagenet21k | ViT-L_16 | imagenet2012 |     0.8507 |         | [checkpoint] |
-| imagenet21k | ViT-L_32 | imagenet2012 |     0.8201 |         | [checkpoint] |
+| imagenet21k | ViT-B_16 | imagenet2012 |     84.62  | 83.90   | [checkpoint] |
+| imagenet21k | ViT-B_32 | imagenet2012 |     81.79  | 81.14   | [checkpoint] |
+| imagenet21k | ViT-L_16 | imagenet2012 |     85.07  |         | [checkpoint] |
+| imagenet21k | ViT-L_32 | imagenet2012 |     82.01  |         | [checkpoint] |
 
 
 # TODO List
