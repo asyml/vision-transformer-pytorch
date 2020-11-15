@@ -22,9 +22,9 @@ conda create --name vit --file requirements.txt
 Download pretrained jax models from the [original jax implementation repo](https://github.com/google-research/vision_transformer). 
 Put the files under 'weights/jax'.
 
-Download pretrained pytorch models from http://www.image-net.org/index. Put the files under 'weights/pytorch'.
+Download pretrained [pytorch models](https://drive.google.com/drive/folders/1azgrD1P413pXLJME0PjRRU-Ez-4GWN-S?usp=sharing). Put the files under 'weights/pytorch'.
 
-Download ImageNet dataset from and process it according to. Put it in 'data/ImageNet'
+Download [ImageNet](http://www.image-net.org/index) dataset. Put it in 'data/ImageNet'
 
 # Evaluation
 
@@ -39,12 +39,12 @@ TODO
 
 # Results and Models
 
-| upstream    | model    | dataset      |   jax acc  |   acc   | model link                                                                                                                                                   |
-|:------------|:---------|:-------------|-----------:|--------:|:-------------------------------------------------------------------------------------------------------------------------------------------------------|
-| imagenet21k | ViT-B_16 | imagenet2012 |     84.62  | 83.90   | [checkpoint] |
-| imagenet21k | ViT-B_32 | imagenet2012 |     81.79  | 81.14   | [checkpoint] |
-| imagenet21k | ViT-L_16 | imagenet2012 |     85.07  |         | [checkpoint] |
-| imagenet21k | ViT-L_32 | imagenet2012 |     82.01  |         | [checkpoint] |
+| upstream    | model    | dataset      | orig. jax acc  |  pytorch acc  | model link                                                                                                                                                   |
+|:------------|:---------|:-------------|---------------:|--------------:|:-------------------------------------------------------------------------------------------------------------------------------------------------------|
+| imagenet21k | ViT-B_16 | imagenet2012 |     84.62      |     83.90     | [checkpoint](https://drive.google.com/file/d/1gEcyb4HUDzIvu7lQWTOyDC1X00YzCxFx/view?usp=sharing) |
+| imagenet21k | ViT-B_32 | imagenet2012 |     81.79      |     81.14     | [checkpoint](https://drive.google.com/file/d/1GingK9L_VcJynTCYMc3iMvCh4WG7ScBS/view?usp=sharing) |
+| imagenet21k | ViT-L_16 | imagenet2012 |     85.07      |     84.94     | [checkpoint](https://drive.google.com/file/d/1YVLunKEGApaSKXZKewZz974gHt09Uwyf/view?usp=sharing) |
+| imagenet21k | ViT-L_32 | imagenet2012 |     82.01      |     81.03     | [checkpoint](https://drive.google.com/file/d/1TKOa_dQaMOCL8r_rtcdB7dLGQtzBQ0ud/view?usp=sharing) |
 
 
 # TODO List
