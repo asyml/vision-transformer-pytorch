@@ -1,17 +1,40 @@
+import os
 import torch
 from tensorflow.io import gfile
 import numpy as np
 
 
-def load(path):
-    """Loads params from a checkpoint previously stored with `save()`."""
+def load_checkpoint(path):
+    """ Load weights from a given checkpoint path in npz/pth """
+    if path.endswith('npz'):
+        keys, values = load_jax(path)
+        state_dict = convert_jax_pytorch(keys, values)
+    elif path.endswith('pth'):
+        state_dict = torch.load(path)['state_dict']
+    else:
+        raise ValueError("checkpoint format {} not supported yet!".format(path.split('.')[-1]))
+
+    return state_dict
+
+
+def load_jax(path):
+    """ Loads params from a npz checkpoint previously stored with `save()` in jax implemetation """
     with gfile.GFile(path, 'rb') as f:
         ckpt_dict = np.load(f, allow_pickle=False)
         keys, values = zip(*list(ckpt_dict.items()))
     return keys, values
 
 
+def save_jax_to_pytorch(jax_path, save_path):
+    model_name = jax_path.split('/')[-1].split('.')[0]
+    keys, values = load_jax(jax_path)
+    state_dict = convert_jax_pytorch(keys, values)
+    checkpoint = {'state_dict': state_dict}
+    torch.save(os.path.join(save_path, model_name + '.pth'), checkpoint)
+
+
 def replace_names(names):
+    """ Replace jax model names with pytorch model names """
     new_names = []
     for name in names:
         if name == 'Transformer':
@@ -54,7 +77,8 @@ def replace_names(names):
     return new_names
 
 
-def convert(keys, values):
+def convert_jax_pytorch(keys, values):
+    """ Convert jax model parameters with pytorch model parameters """
     state_dict = {}
     for key, value in zip(keys, values):
 
@@ -92,23 +116,8 @@ def convert(keys, values):
 
 
 if __name__ == '__main__':
-    from model import VisionTransformer
-
-    keys, values = load('/Users/leon/Downloads/imagenet21k+imagenet2012_ViT-B_16-224.npz')
-    state_dict = convert(keys, values)
-
-    model = VisionTransformer(
-                 image_size=(224, 224),
-                 patch_size=(16, 16),
-                 emb_dim=768,
-                 mlp_dim=3072,
-                 num_heads=12,
-                 num_layers=12,
-                 num_classes=1000,
-                 attn_dropout_rate=0.0,
-                 dropout_rate=0.1)
-    temp = model.state_dict()
-    model.load_state_dict(state_dict)
+    keys, values = load_jax('/Users/leon/Downloads/imagenet21k+imagenet2012_ViT-B_16-224.npz')
+    state_dict = convert_jax_pytorch(keys, values)
 
 
 
