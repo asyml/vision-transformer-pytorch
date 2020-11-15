@@ -11,14 +11,19 @@ class CIFAR10DataLoader(DataLoader):
     def __init__(self, data_dir, split='train', image_size=224, batch_size=16, num_workers=8):
         if split == 'train':
             train = True
+            transform = transforms.Compose([
+                transforms.Resize(image_size),
+                transforms.RandomHorizontalFlip(),
+                transforms.ToTensor(),
+                transforms.Normalize([0.5, 0.5, 0.5], [0.5, 0.5, 0.5])
+            ])
         else:
             train = False
-
-        transform = transforms.Compose([
-            transforms.Resize(image_size),
-            transforms.ToTensor(),
-            transforms.Normalize([0.5, 0.5, 0.5], [0.5, 0.5, 0.5])
-        ])
+            transform = transforms.Compose([
+                transforms.Resize(image_size),
+                transforms.ToTensor(),
+                transforms.Normalize([0.5, 0.5, 0.5], [0.5, 0.5, 0.5])
+            ])
 
         self.dataset = CIFAR10(root=data_dir, train=train, transform=transform, download=True)
 
@@ -32,11 +37,19 @@ class CIFAR10DataLoader(DataLoader):
 class ImageNetDataLoader(DataLoader):
     def __init__(self, data_dir, split='train', image_size=224, batch_size=16, num_workers=8):
 
-        transform = transforms.Compose([
-            transforms.Resize((image_size, image_size)),
-            transforms.ToTensor(),
-            transforms.Normalize([0.5, 0.5, 0.5], [0.5, 0.5, 0.5])
-        ])
+        if split == 'train':
+            transform = transforms.Compose([
+                transforms.Resize((image_size, image_size)),
+                transforms.RandomHorizontalFlip(),
+                transforms.ToTensor(),
+                transforms.Normalize([0.5, 0.5, 0.5], [0.5, 0.5, 0.5])
+            ])
+        else:
+            transform = transforms.Compose([
+                transforms.Resize((image_size, image_size)),
+                transforms.ToTensor(),
+                transforms.Normalize([0.5, 0.5, 0.5], [0.5, 0.5, 0.5])
+            ])
 
         self.dataset = ImageFolder(root=os.path.join(data_dir, split), transform=transform)
         super(ImageNetDataLoader, self).__init__(

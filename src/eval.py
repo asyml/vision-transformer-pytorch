@@ -2,20 +2,18 @@ import torch
 import numpy as np
 from tqdm import tqdm
 from model import VisionTransformer
-from config import get_config
+from config import get_eval_config
 from checkpoint import load_checkpoint
 from data_loaders import *
-from utils import accuracy
+from utils import accuracy, setup_device
 
 
 def main():
 
-    if torch.cuda.is_available():
-        device = torch.device("cuda")
-    else:
-        device = torch.device("cpu")
+    config = get_eval_config()
 
-    config = get_config()
+    # device
+    device, device_ids = setup_device(config.n_gpu)
 
     # create model
     model = VisionTransformer(
@@ -36,7 +34,9 @@ def main():
         print("Load pretrained weights from {}".format(config.checkpoint_path))
 
     # send model to device
-    model.to(device)
+    model = model.to(device)
+    if len(device_ids) > 1:
+        model = torch.nn.DataParallel(model, device_ids=device_ids)
 
     # create dataloader
     data_loader = eval("{}DataLoader".format(config.dataset))(

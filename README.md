@@ -35,7 +35,10 @@ Make sure you have downloaded the pretrained weights either in '.npy' format or 
 
 
 # Fine-Tune
-TODO
+```
+CUDA_VISIBLE_DEVICES=0,1,2,3 python train.py --exp-name ft --n-gpu 4 --tensorboard  --model-arch b16 --checkpoint-path ../weights/pytorch/imagenet21k+imagenet2012_ViT-B_16.pth --image-size 384 --batch-size 40 --data-dir ../data/ --dataset CIFAR10 --num-classes 10 --train-steps 10000 --lr 0.03 --wd 0.0
+```
+
 
 # Results and Models
 
@@ -48,9 +51,7 @@ TODO
 
 
 # TODO List
-- [ ] Fine-Tune code 
 - [ ] Fine-Tune results on CIFAR10/CIFAR100
-- [ ] Multi-GPU
 - [ ] Integrated into Texar
 
 
