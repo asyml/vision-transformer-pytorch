@@ -30,7 +30,7 @@ def save_jax_to_pytorch(jax_path, save_path):
     keys, values = load_jax(jax_path)
     state_dict = convert_jax_pytorch(keys, values)
     checkpoint = {'state_dict': state_dict}
-    torch.save(os.path.join(save_path, model_name + '.pth'), checkpoint)
+    torch.save(checkpoint, os.path.join(save_path, model_name + '.pth'))
 
 
 def replace_names(names):
@@ -110,14 +110,12 @@ def convert_jax_pytorch(keys, values):
         elif num_dim == 4 and torch_names[-1] == 'weight':
             tensor_value = tensor_value.permute(3, 2, 0, 1)
 
-        print("{}: {}".format(torch_key, tensor_value.shape))
+        # print("{}: {}".format(torch_key, tensor_value.shape))
         state_dict[torch_key] = tensor_value
     return state_dict
 
 
 if __name__ == '__main__':
-    keys, values = load_jax('/Users/leon/Downloads/imagenet21k+imagenet2012_ViT-B_16-224.npz')
-    state_dict = convert_jax_pytorch(keys, values)
-
+    save_jax_to_pytorch('/Users/leon/Downloads/jax/imagenet21k+imagenet2012_ViT-L_16-224.npz', '/Users/leon/Downloads/pytorch')
 
 
