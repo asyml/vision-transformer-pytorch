@@ -57,7 +57,12 @@ CUDA_VISIBLE_DEVICES=0,1,2,3 python train.py --exp-name ft --n-gpu 4 --tensorboa
 | imagenet21k | ViT-B_16 | CIFAR10      |     98.92      |     98.90     | 
 | imagenet21k | ViT-B_32 | CIFAR10      |     -      |     -     | 
 | imagenet21k | ViT-L_16 | CIFAR10      |     -      |     -     |
-| imagenet21k | ViT-L_32 | CIFAR10      |     -      |     -     | 
+| imagenet21k | ViT-L_32 | CIFAR10      |     -      |     -     |
+| imagenet21k | ViT-B_16 | CIFAR100     |     -      |     -     | 
+| imagenet21k | ViT-B_32 | CIFAR100     |     -      |     -     | 
+| imagenet21k | ViT-L_16 | CIFAR100     |     -      |     -     |
+| imagenet21k | ViT-L_32 | CIFAR100     |     -      |     -     | 
+ 
 
 # TODO List
 - [ ] Fine-Tune results on CIFAR10/CIFAR100
