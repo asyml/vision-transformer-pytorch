@@ -158,7 +158,7 @@ def main():
     # start training
     print("start training")
     best_acc = 0.0
-    epochs = config.train_steps // len(train_dataloader) + 1
+    epochs = config.train_steps // len(train_dataloader)
     for epoch in range(1, epochs + 1):
         log = {'epoch': epoch}
 

@@ -42,6 +42,7 @@ CUDA_VISIBLE_DEVICES=0,1,2,3 python train.py --exp-name ft --n-gpu 4 --tensorboa
 
 # Results and Models
 
+## Pretrained Results on ImageNet
 | upstream    | model    | dataset      | orig. jax acc  |  pytorch acc  | model link                                                                                                                                                   |
 |:------------|:---------|:-------------|---------------:|--------------:|:-------------------------------------------------------------------------------------------------------------------------------------------------------|
 | imagenet21k | ViT-B_16 | imagenet2012 |     84.62      |     83.90     | [checkpoint](https://drive.google.com/file/d/1gEcyb4HUDzIvu7lQWTOyDC1X00YzCxFx/view?usp=sharing) |
@@ -49,6 +50,14 @@ CUDA_VISIBLE_DEVICES=0,1,2,3 python train.py --exp-name ft --n-gpu 4 --tensorboa
 | imagenet21k | ViT-L_16 | imagenet2012 |     85.07      |     84.94     | [checkpoint](https://drive.google.com/file/d/1YVLunKEGApaSKXZKewZz974gHt09Uwyf/view?usp=sharing) |
 | imagenet21k | ViT-L_32 | imagenet2012 |     82.01      |     81.03     | [checkpoint](https://drive.google.com/file/d/1TKOa_dQaMOCL8r_rtcdB7dLGQtzBQ0ud/view?usp=sharing) |
 
+## Fine-Tune Results on CIFAR10/100
+
+| upstream    | model    | dataset      | orig. jax acc  |  pytorch acc  | 
+|:------------|:---------|:-------------|---------------:|--------------:|
+| imagenet21k | ViT-B_16 | CIFAR10      |     98.92      |     98.90     | 
+| imagenet21k | ViT-B_32 | CIFAR10      |     -      |     -     | 
+| imagenet21k | ViT-L_16 | CIFAR10      |     -      |     -     |
+| imagenet21k | ViT-L_32 | CIFAR10      |     -      |     -     | 
 
 # TODO List
 - [ ] Fine-Tune results on CIFAR10/CIFAR100
