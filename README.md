@@ -80,6 +80,7 @@ Due to limited GPU resources, the fine-tune results are obtained by using a batc
 3. https://github.com/kamalkraj/Vision-Transformer
 
 # Contributing
+Issues and Pull Requests are welcome for improving this repo. Please follow the [contribution guide](./CONTRIBUTING.md)
 
 
 # License
