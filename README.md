@@ -30,13 +30,13 @@ Download [ImageNet](http://www.image-net.org/index) dataset. Put it in 'data/Ima
 
 Make sure you have downloaded the pretrained weights either in '.npy' format or '.pth' format
 ```
- python eval.py --model-arch b16 --checkpoint-path ../weights/jax/[model_path] --image-size 384 --batch-size 128 --data-dir ../data/ImageNet --dataset ImageNet --num-classes 1000
+python eval.py --model-arch b16 --checkpoint-path ../weights/jax/[model_path] --image-size 384 --batch-size 128 --data-dir ../data/ImageNet --dataset ImageNet --num-classes 1000
 ```
 
 
 # Fine-Tune
 ```
-CUDA_VISIBLE_DEVICES=0,1,2,3 python train.py --exp-name ft --n-gpu 4 --tensorboard  --model-arch b16 --checkpoint-path ../weights/pytorch/imagenet21k+imagenet2012_ViT-B_16.pth --image-size 384 --batch-size 40 --data-dir ../data/ --dataset CIFAR10 --num-classes 10 --train-steps 10000 --lr 0.03 --wd 0.0
+python train.py --exp-name ft --n-gpu 4 --tensorboard  --model-arch b16 --checkpoint-path ../weights/pytorch/imagenet21k+imagenet2012_ViT-B_16.pth --image-size 384 --batch-size 40 --data-dir ../data/ --dataset CIFAR10 --num-classes 10 --train-steps 10000 --lr 0.03 --wd 0.0
 ```
 
 
@@ -52,20 +52,14 @@ CUDA_VISIBLE_DEVICES=0,1,2,3 python train.py --exp-name ft --n-gpu 4 --tensorboa
 
 ## Fine-Tune Results on CIFAR10/100
 
+
 | upstream    | model    | dataset      | orig. jax acc  |  pytorch acc  | 
 |:------------|:---------|:-------------|---------------:|--------------:|
 | imagenet21k | ViT-B_16 | CIFAR10      |     98.92      |     98.90     | 
-| imagenet21k | ViT-B_32 | CIFAR10      |     -      |     -     | 
-| imagenet21k | ViT-L_16 | CIFAR10      |     -      |     -     |
-| imagenet21k | ViT-L_32 | CIFAR10      |     -      |     -     |
-| imagenet21k | ViT-B_16 | CIFAR100     |     -      |     -     | 
-| imagenet21k | ViT-B_32 | CIFAR100     |     -      |     -     | 
-| imagenet21k | ViT-L_16 | CIFAR100     |     -      |     -     |
-| imagenet21k | ViT-L_32 | CIFAR100     |     -      |     -     | 
+| imagenet21k | ViT-B_16 | CIFAR100     |     92.26      |     91.65     | 
  
 
 # TODO List
-- [ ] Fine-Tune results on CIFAR10/CIFAR100
 - [ ] Integrated into Texar
 
 
