@@ -1,5 +1,6 @@
 # Vision Transformer - Pytorch
 Pytorch implementation of Vision Transformer. Pretrained pytorch weights are provided which are converted from original jax/flax weights. 
+This is a project of the [ASYML family](https://asyml.io/).
 
 
 # Introduction
